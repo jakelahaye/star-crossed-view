@@ -272,8 +272,34 @@ const Index = () => {
           </div>
         ) : (
           <div className="max-w-6xl mx-auto space-y-8">
-            <DetailedCompatibilityResult person1={people[0]} person2={people[1]} />
-            <PlanetaryOverview person1={people[0]} person2={people[1]} />
+            {activeTab === "solo" ? (
+              <>
+                <PlanetaryOverview person1={people[0]} />
+                
+                {/* Placeholder for AI Analysis */}
+                <Card className="bg-background/40 backdrop-blur-md border-accent/20">
+                  <CardHeader>
+                    <CardTitle className="text-center text-accent">
+                      <Star className="h-5 w-5 inline mr-2" />
+                      Detailed Analysis
+                      <Star className="h-5 w-5 inline ml-2" />
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-center text-muted-foreground">
+                      <Sparkles className="h-8 w-8 mx-auto mb-4 text-accent/50" />
+                      <p>AI-powered birth chart analysis coming soon...</p>
+                      <p className="text-sm mt-2">This will include personalized insights, strengths, and life guidance based on your planetary positions.</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </>
+            ) : (
+              <>
+                <DetailedCompatibilityResult person1={people[0]} person2={people[1]} />
+                <PlanetaryOverview person1={people[0]} person2={people[1]} />
+              </>
+            )}
             
             <div className="text-center space-y-4">
               <Button
@@ -281,10 +307,10 @@ const Index = () => {
                 onClick={handleReset}
                 className="mr-4"
               >
-                Calculate Another Compatibility
+                {activeTab === "solo" ? "Calculate Another Chart" : "Calculate Another Compatibility"}
               </Button>
               <div className="text-sm text-muted-foreground">
-                Explore more cosmic connections with different birth details
+                {activeTab === "solo" ? "Explore your cosmic blueprint with different birth details" : "Explore more cosmic connections with different birth details"}
               </div>
             </div>
           </div>

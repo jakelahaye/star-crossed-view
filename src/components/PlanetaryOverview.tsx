@@ -10,7 +10,7 @@ interface BirthInfo {
 
 interface PlanetaryOverviewProps {
   person1: BirthInfo;
-  person2: BirthInfo;
+  person2?: BirthInfo;
 }
 
 const zodiacSigns = [
@@ -90,10 +90,10 @@ const calculateElementCounts = (planetaryData: any[]) => {
 
 const PlanetaryOverview: React.FC<PlanetaryOverviewProps> = ({ person1, person2 }) => {
   const person1Data = generatePlanetaryData(person1);
-  const person2Data = generatePlanetaryData(person2);
+  const person2Data = person2 ? generatePlanetaryData(person2) : null;
   
   const person1Elements = calculateElementCounts(person1Data);
-  const person2Elements = calculateElementCounts(person2Data);
+  const person2Elements = person2Data ? calculateElementCounts(person2Data) : null;
 
   const PersonColumn = ({ personData, elements, title }: { personData: any[], elements: any, title: string }) => (
     <div className="space-y-6">
@@ -157,22 +157,26 @@ const PlanetaryOverview: React.FC<PlanetaryOverviewProps> = ({ person1, person2 
     <div className="mt-8 animate-fade-in">
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent mb-2">
-          Astrological Profiles
+          {person2 ? "Astrological Profiles" : "Astrological Profile"}
         </h2>
-        <p className="text-muted-foreground">Planetary positions and elemental distributions</p>
+        <p className="text-muted-foreground">
+          {person2 ? "Planetary positions and elemental distributions" : "Your planetary positions and elemental distribution"}
+        </p>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className={person2 ? "grid md:grid-cols-2 gap-8" : "max-w-2xl mx-auto"}>
         <PersonColumn 
           personData={person1Data} 
           elements={person1Elements} 
           title={person1.name || "Person 1"} 
         />
-        <PersonColumn 
-          personData={person2Data} 
-          elements={person2Elements} 
-          title={person2.name || "Person 2"} 
-        />
+        {person2 && person2Data && person2Elements && (
+          <PersonColumn 
+            personData={person2Data} 
+            elements={person2Elements} 
+            title={person2.name || "Person 2"} 
+          />
+        )}
       </div>
     </div>
   );
