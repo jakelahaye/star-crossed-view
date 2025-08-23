@@ -333,6 +333,65 @@ const Index = () => {
               </>
             ) : (
               <>
+                {/* Birth Charts for Both People */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                  <Card className="bg-background/40 backdrop-blur-md border-accent/20">
+                    <CardHeader>
+                      <CardTitle className="text-center text-accent flex items-center justify-center gap-2">
+                        <User className="h-5 w-5" />
+                        {people[0].name}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex flex-col items-center gap-4">
+                        <BirthChart birthInfo={people[0]} />
+                        <div className="grid grid-cols-1 gap-2 text-sm text-center">
+                          <div className="flex items-center justify-center gap-2">
+                            <span>📅</span>
+                            <span>{new Date(people[0].date).toLocaleDateString()}</span>
+                          </div>
+                          <div className="flex items-center justify-center gap-2">
+                            <span>🕐</span>
+                            <span>{people[0].time}</span>
+                          </div>
+                          <div className="flex items-center justify-center gap-2">
+                            <span>📍</span>
+                            <span>{people[0].city}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-background/40 backdrop-blur-md border-accent/20">
+                    <CardHeader>
+                      <CardTitle className="text-center text-accent flex items-center justify-center gap-2">
+                        <User className="h-5 w-5" />
+                        {people[1].name}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex flex-col items-center gap-4">
+                        <BirthChart birthInfo={people[1]} />
+                        <div className="grid grid-cols-1 gap-2 text-sm text-center">
+                          <div className="flex items-center justify-center gap-2">
+                            <span>📅</span>
+                            <span>{new Date(people[1].date).toLocaleDateString()}</span>
+                          </div>
+                          <div className="flex items-center justify-center gap-2">
+                            <span>🕐</span>
+                            <span>{people[1].time}</span>
+                          </div>
+                          <div className="flex items-center justify-center gap-2">
+                            <span>📍</span>
+                            <span>{people[1].city}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
                 <DetailedCompatibilityResult person1={people[0]} person2={people[1]} />
                 <PlanetaryOverview person1={people[0]} person2={people[1]} />
               </>
