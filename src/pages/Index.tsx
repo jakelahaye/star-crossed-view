@@ -86,11 +86,14 @@ const Index = () => {
                 Solo
               </TabsTrigger>
               <TabsTrigger value="romantic" className="flex items-center gap-2 data-[state=active]:bg-accent/20 data-[state=active]:text-accent">
-                <Heart className="h-4 w-4" />
+                <div className="flex items-center gap-1">
+                  <Heart className="h-3 w-3" />
+                  <Heart className="h-3 w-3" />
+                </div>
                 Romantic
               </TabsTrigger>
               <TabsTrigger value="friendship" className="flex items-center gap-2 data-[state=active]:bg-accent/20 data-[state=active]:text-accent">
-                <UserPlus className="h-4 w-4" />
+                <Users className="h-4 w-4" />
                 Friendship
               </TabsTrigger>
               <TabsTrigger value="group" className="flex items-center gap-2 data-[state=active]:bg-accent/20 data-[state=active]:text-accent">
