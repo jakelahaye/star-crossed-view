@@ -1,25 +1,44 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import ZodiacSelector from "@/components/ZodiacSelector";
-import CompatibilityResult from "@/components/CompatibilityResult";
+import BirthInfoForm from "@/components/BirthInfoForm";
+import DetailedCompatibilityResult from "@/components/DetailedCompatibilityResult";
 import { Sparkles, Heart, Star } from "lucide-react";
 import cosmicBackground from "@/assets/cosmic-background.jpg";
 
+interface BirthInfo {
+  date: string;
+  time: string;
+  city: string;
+}
+
 const Index = () => {
-  const [selectedSign1, setSelectedSign1] = useState<string | null>(null);
-  const [selectedSign2, setSelectedSign2] = useState<string | null>(null);
+  const [person1Info, setPerson1Info] = useState<BirthInfo>({
+    date: "",
+    time: "",
+    city: ""
+  });
+  const [person2Info, setPerson2Info] = useState<BirthInfo>({
+    date: "",
+    time: "",
+    city: ""
+  });
   const [showResult, setShowResult] = useState(false);
 
+  const isFormValid = () => {
+    return person1Info.date && person1Info.time && person1Info.city &&
+           person2Info.date && person2Info.time && person2Info.city;
+  };
+
   const handleCalculateCompatibility = () => {
-    if (selectedSign1 && selectedSign2) {
+    if (isFormValid()) {
       setShowResult(true);
     }
   };
 
   const handleReset = () => {
-    setSelectedSign1(null);
-    setSelectedSign2(null);
+    setPerson1Info({ date: "", time: "", city: "" });
+    setPerson2Info({ date: "", time: "", city: "" });
     setShowResult(false);
   };
 
@@ -47,50 +66,29 @@ const Index = () => {
             <Star className="h-8 w-8 text-accent animate-twinkle" />
           </div>
           <p className="text-xl text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Discover the celestial connection between two souls through the ancient wisdom of astrology
+            Discover the celestial connection between two souls through detailed birth chart analysis
           </p>
           <div className="flex items-center justify-center gap-2">
             <Sparkles className="h-5 w-5 text-accent animate-float" />
-            <span className="text-foreground">Let the stars reveal your compatibility</span>
+            <span className="text-foreground">Calculate Compatibility</span>
             <Sparkles className="h-5 w-5 text-accent animate-float" />
           </div>
         </div>
 
         {!showResult ? (
-          <div className="max-w-6xl mx-auto space-y-12">
-            {/* Sign Selection */}
+          <div className="max-w-6xl mx-auto space-y-8">
+            {/* Birth Information Forms */}
             <div className="grid md:grid-cols-2 gap-8">
-              <Card className="bg-card/50 backdrop-blur-sm border-border/50 shadow-cosmic">
-                <CardHeader>
-                  <CardTitle className="text-center flex items-center justify-center gap-2">
-                    <Heart className="h-5 w-5 text-accent" />
-                    First Person
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ZodiacSelector
-                    title="Choose Your Sign"
-                    selectedSign={selectedSign1}
-                    onSelect={setSelectedSign1}
-                  />
-                </CardContent>
-              </Card>
-
-              <Card className="bg-card/50 backdrop-blur-sm border-border/50 shadow-cosmic">
-                <CardHeader>
-                  <CardTitle className="text-center flex items-center justify-center gap-2">
-                    <Heart className="h-5 w-5 text-accent" />
-                    Second Person
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ZodiacSelector
-                    title="Choose Their Sign"
-                    selectedSign={selectedSign2}
-                    onSelect={setSelectedSign2}
-                  />
-                </CardContent>
-              </Card>
+              <BirthInfoForm
+                personNumber={1}
+                birthInfo={person1Info}
+                onUpdate={setPerson1Info}
+              />
+              <BirthInfoForm
+                personNumber={2}
+                birthInfo={person2Info}
+                onUpdate={setPerson2Info}
+              />
             </div>
 
             {/* Calculate Button */}
@@ -99,23 +97,23 @@ const Index = () => {
                 variant="cosmic"
                 size="lg"
                 onClick={handleCalculateCompatibility}
-                disabled={!selectedSign1 || !selectedSign2}
+                disabled={!isFormValid()}
                 className="text-lg px-8 py-4"
               >
                 <Sparkles className="h-5 w-5 mr-2" />
-                Reveal Cosmic Compatibility
+                Calculate Compatibility
                 <Sparkles className="h-5 w-5 ml-2" />
               </Button>
-              {(!selectedSign1 || !selectedSign2) && (
+              {!isFormValid() && (
                 <p className="text-muted-foreground mt-3">
-                  Please select both zodiac signs to continue
+                  Please fill in all birth information for both people
                 </p>
               )}
             </div>
           </div>
         ) : (
           <div className="max-w-4xl mx-auto space-y-8">
-            <CompatibilityResult sign1={selectedSign1!} sign2={selectedSign2!} />
+            <DetailedCompatibilityResult person1={person1Info} person2={person2Info} />
             
             <div className="text-center space-y-4">
               <Button
@@ -123,10 +121,10 @@ const Index = () => {
                 onClick={handleReset}
                 className="mr-4"
               >
-                Try Another Combination
+                Calculate Another Compatibility
               </Button>
               <div className="text-sm text-muted-foreground">
-                Explore more cosmic connections and discover new possibilities
+                Explore more cosmic connections with different birth details
               </div>
             </div>
           </div>
