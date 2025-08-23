@@ -230,6 +230,25 @@ const Index = () => {
               )}
             </div>
 
+            {/* Demo Data Button */}
+            <div className="text-center mb-6">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  const demoData = [
+                    { name: "Alex", date: "1990-06-15", time: "14:30", city: "New York" },
+                    { name: "Jordan", date: "1992-03-22", time: "09:45", city: "Los Angeles" },
+                    { name: "Taylor", date: "1989-11-08", time: "18:20", city: "Chicago" }
+                  ];
+                  setPeople(demoData);
+                }}
+                className="border-accent/20 hover:bg-accent/10 hover:border-accent/40"
+              >
+                <Star className="h-4 w-4 mr-2" />
+                Load Demo Data
+              </Button>
+            </div>
+
             {/* Calculate Button */}
             <div className="text-center animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
               <Button
