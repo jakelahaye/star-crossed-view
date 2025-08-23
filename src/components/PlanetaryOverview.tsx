@@ -96,54 +96,44 @@ const PlanetaryOverview: React.FC<PlanetaryOverviewProps> = ({ person1, person2 
   const person2Elements = person2Data ? calculateElementCounts(person2Data) : null;
 
   const PersonColumn = ({ personData, elements, title }: { personData: any[], elements: any, title: string }) => (
-    <div className="space-y-4">
-      <h3 className="text-xl font-bold text-center bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+    <div className="bg-card/20 backdrop-blur-sm border border-border/20 rounded-xl p-4 space-y-4">
+      <h3 className="text-lg font-semibold text-center text-foreground mb-3">
         {title}
       </h3>
       
-      {/* Element Overview - Compact inline layout */}
-      <div className="bg-card/30 backdrop-blur-sm border border-border/30 rounded-lg p-3">
-        <h4 className="text-sm font-semibold mb-2 text-accent">Elements</h4>
-        <div className="flex flex-wrap gap-2">
-          {Object.entries(elements).map(([element, count]) => (
-            <div
-              key={element}
-              className="flex items-center gap-1 px-2 py-1 rounded-md bg-secondary/20 border border-border/20 text-xs"
-            >
-              <span className="text-sm">{elementIcons[element as keyof typeof elementIcons]}</span>
-              <span className="font-medium">{element}:</span>
-              <span className="font-bold text-accent">{count as number}</span>
-            </div>
-          ))}
-        </div>
+      {/* Simplified Element Summary */}
+      <div className="flex justify-center gap-3 mb-4">
+        {Object.entries(elements).map(([element, count]) => (
+          <div key={element} className="flex items-center gap-1 text-xs text-muted-foreground">
+            <span>{elementIcons[element as keyof typeof elementIcons]}</span>
+            <span>{count as number}</span>
+          </div>
+        ))}
       </div>
 
-      {/* Planetary Positions - Compact grid layout */}
-      <div className="grid grid-cols-2 gap-2">
+      {/* Clean Planetary List */}
+      <div className="space-y-2">
         {personData.map((planet, index) => (
           <div
             key={planet.name}
-            className="flex items-center justify-between p-2 bg-card/20 backdrop-blur-sm border border-border/20 rounded-lg hover:bg-card/30 transition-all duration-300"
+            className="flex items-center justify-between py-2 px-3 rounded-lg bg-background/30 hover:bg-background/50 transition-colors"
           >
             <div className="flex items-center gap-2">
               {planet.icon ? (
-                <planet.icon className="h-4 w-4 text-accent" />
+                <planet.icon className="h-4 w-4 text-muted-foreground" />
               ) : (
-                <span className="text-sm">{planet.iconSymbol}</span>
+                <span className="text-sm text-muted-foreground">{planet.iconSymbol}</span>
               )}
               <span className="text-sm font-medium">{planet.name}</span>
             </div>
             
-            <div
-              className="px-2 py-1 rounded-md border text-xs font-semibold flex items-center gap-1"
-              style={{
-                backgroundColor: planet.sign.color + '20',
-                borderColor: planet.sign.color + '40',
-                color: planet.sign.color
-              }}
-            >
-              <span>{planet.sign.name}</span>
-              <span className="text-sm">{elementIcons[planet.sign.element as keyof typeof elementIcons]}</span>
+            <div className="flex items-center gap-1">
+              <span className="text-sm font-medium" style={{ color: planet.sign.color }}>
+                {planet.sign.name}
+              </span>
+              <span className="text-xs opacity-70">
+                {elementIcons[planet.sign.element as keyof typeof elementIcons]}
+              </span>
             </div>
           </div>
         ))}
