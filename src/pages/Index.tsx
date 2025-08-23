@@ -260,7 +260,7 @@ const Index = () => {
                 className="text-lg px-12 py-4 hover:scale-105 transition-all duration-300"
               >
                 <Sparkles className="h-5 w-5 mr-2" />
-                Calculate Compatibility
+                {activeTab === "solo" ? "Chart Analysis" : "Calculate Compatibility"}
                 <Sparkles className="h-5 w-5 ml-2" />
               </Button>
               {!isFormValid() && (
