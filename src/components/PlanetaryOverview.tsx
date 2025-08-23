@@ -96,56 +96,54 @@ const PlanetaryOverview: React.FC<PlanetaryOverviewProps> = ({ person1, person2 
   const person2Elements = person2Data ? calculateElementCounts(person2Data) : null;
 
   const PersonColumn = ({ personData, elements, title }: { personData: any[], elements: any, title: string }) => (
-    <div className="space-y-6">
-      <h3 className="text-2xl font-bold text-center bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+    <div className="space-y-4">
+      <h3 className="text-xl font-bold text-center bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
         {title}
       </h3>
       
-      {/* Element Overview */}
-      <div className="bg-card/30 backdrop-blur-sm border border-border/30 rounded-xl p-4">
-        <h4 className="text-lg font-semibold mb-3 text-accent">Element Overview</h4>
-        <div className="grid grid-cols-2 gap-2">
+      {/* Element Overview - Compact inline layout */}
+      <div className="bg-card/30 backdrop-blur-sm border border-border/30 rounded-lg p-3">
+        <h4 className="text-sm font-semibold mb-2 text-accent">Elements</h4>
+        <div className="flex flex-wrap gap-2">
           {Object.entries(elements).map(([element, count]) => (
             <div
               key={element}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg bg-secondary/20 border border-border/20"
+              className="flex items-center gap-1 px-2 py-1 rounded-md bg-secondary/20 border border-border/20 text-xs"
             >
-              <span className="text-lg">{elementIcons[element as keyof typeof elementIcons]}</span>
-              <span className="text-sm font-medium">{element}:</span>
-              <span className="text-sm font-bold text-accent">{count as number}</span>
+              <span className="text-sm">{elementIcons[element as keyof typeof elementIcons]}</span>
+              <span className="font-medium">{element}:</span>
+              <span className="font-bold text-accent">{count as number}</span>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Planetary Positions */}
-      <div className="space-y-3">
+      {/* Planetary Positions - Compact grid layout */}
+      <div className="grid grid-cols-2 gap-2">
         {personData.map((planet, index) => (
           <div
             key={planet.name}
-            className="flex items-center justify-between p-4 bg-card/20 backdrop-blur-sm border border-border/20 rounded-xl hover:bg-card/30 transition-all duration-300"
+            className="flex items-center justify-between p-2 bg-card/20 backdrop-blur-sm border border-border/20 rounded-lg hover:bg-card/30 transition-all duration-300"
           >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               {planet.icon ? (
-                <planet.icon className="h-5 w-5 text-accent" />
+                <planet.icon className="h-4 w-4 text-accent" />
               ) : (
-                <span className="text-xl">{planet.iconSymbol}</span>
+                <span className="text-sm">{planet.iconSymbol}</span>
               )}
-              <span className="font-medium">{planet.name}</span>
+              <span className="text-sm font-medium">{planet.name}</span>
             </div>
             
-            <div className="flex items-center gap-2">
-              <div
-                className="px-3 py-1 rounded-full border text-sm font-semibold flex items-center gap-1"
-                style={{
-                  backgroundColor: planet.sign.color + '20',
-                  borderColor: planet.sign.color + '40',
-                  color: planet.sign.color
-                }}
-              >
-                <span>{planet.sign.name}</span>
-                <span className="text-lg">{elementIcons[planet.sign.element as keyof typeof elementIcons]}</span>
-              </div>
+            <div
+              className="px-2 py-1 rounded-md border text-xs font-semibold flex items-center gap-1"
+              style={{
+                backgroundColor: planet.sign.color + '20',
+                borderColor: planet.sign.color + '40',
+                color: planet.sign.color
+              }}
+            >
+              <span>{planet.sign.name}</span>
+              <span className="text-sm">{elementIcons[planet.sign.element as keyof typeof elementIcons]}</span>
             </div>
           </div>
         ))}
