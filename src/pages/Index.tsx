@@ -60,52 +60,74 @@ const Index = () => {
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
             <Star className="h-8 w-8 text-accent animate-twinkle" />
-            <h1 className="text-5xl md:text-6xl font-bold bg-starlight bg-clip-text text-transparent">
-              Cosmic Love
+            <h1 className="text-4xl md:text-5xl font-bold bg-starlight bg-clip-text text-transparent">
+              Astrological Compatibility
             </h1>
             <Star className="h-8 w-8 text-accent animate-twinkle" />
           </div>
-          <p className="text-xl text-muted-foreground mb-6 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
             Discover the celestial connection between two souls through detailed birth chart analysis
           </p>
           <div className="flex items-center justify-center gap-2">
-            <Sparkles className="h-5 w-5 text-accent animate-float" />
-            <span className="text-foreground">Calculate Compatibility</span>
-            <Sparkles className="h-5 w-5 text-accent animate-float" />
+            <Sparkles className="h-4 w-4 text-accent animate-float" />
+            <span className="text-foreground text-sm">Enter birth details below to reveal cosmic compatibility</span>
+            <Sparkles className="h-4 w-4 text-accent animate-float" />
           </div>
         </div>
 
+        {/* Decorative elements */}
+        <div className="flex justify-center items-center gap-8 mb-8 opacity-30">
+          <div className="text-2xl animate-twinkle">⭐</div>
+          <div className="w-16 h-px bg-gradient-to-r from-transparent via-accent to-transparent"></div>
+          <div className="text-2xl animate-twinkle" style={{ animationDelay: '1s' }}>✨</div>
+          <div className="w-16 h-px bg-gradient-to-r from-transparent via-accent to-transparent"></div>
+          <div className="text-2xl animate-twinkle" style={{ animationDelay: '2s' }}>🌟</div>
+        </div>
+
         {!showResult ? (
-          <div className="max-w-6xl mx-auto space-y-8">
+          <div className="max-w-5xl mx-auto space-y-8">
             {/* Birth Information Forms */}
-            <div className="grid md:grid-cols-2 gap-8">
-              <BirthInfoForm
-                personNumber={1}
-                birthInfo={person1Info}
-                onUpdate={setPerson1Info}
-              />
-              <BirthInfoForm
-                personNumber={2}
-                birthInfo={person2Info}
-                onUpdate={setPerson2Info}
-              />
+            <div className="relative">
+              {/* Cosmic connector line */}
+              <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0">
+                <div className="w-px h-20 bg-gradient-to-b from-accent/0 via-accent/50 to-accent/0"></div>
+                <Heart className="h-6 w-6 text-accent mx-auto -mt-3 -mb-3 animate-pulse" />
+                <div className="w-px h-20 bg-gradient-to-b from-accent/0 via-accent/50 to-accent/0"></div>
+              </div>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 relative z-10">
+                <div className="order-1 animate-fade-in-up">
+                  <BirthInfoForm
+                    personNumber={1}
+                    birthInfo={person1Info}
+                    onUpdate={setPerson1Info}
+                  />
+                </div>
+                <div className="order-2 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                  <BirthInfoForm
+                    personNumber={2}
+                    birthInfo={person2Info}
+                    onUpdate={setPerson2Info}
+                  />
+                </div>
+              </div>
             </div>
 
             {/* Calculate Button */}
-            <div className="text-center">
+            <div className="text-center animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
               <Button
                 variant="cosmic"
                 size="lg"
                 onClick={handleCalculateCompatibility}
                 disabled={!isFormValid()}
-                className="text-lg px-8 py-4"
+                className="text-lg px-12 py-4 hover:scale-105 transition-all duration-300"
               >
                 <Sparkles className="h-5 w-5 mr-2" />
                 Calculate Compatibility
                 <Sparkles className="h-5 w-5 ml-2" />
               </Button>
               {!isFormValid() && (
-                <p className="text-muted-foreground mt-3">
+                <p className="text-muted-foreground mt-4 text-sm animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
                   Please fill in all birth information for both people
                 </p>
               )}
