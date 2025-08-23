@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import BirthInfoForm from "@/components/BirthInfoForm";
 import DetailedCompatibilityResult from "@/components/DetailedCompatibilityResult";
+import PlanetaryOverview from "@/components/PlanetaryOverview";
 import { Sparkles, Heart, Star, User, Users, UserPlus, UsersRound, Plus, X } from "lucide-react";
 import cosmicBackground from "@/assets/cosmic-background.jpg";
 
@@ -270,8 +271,9 @@ const Index = () => {
             </div>
           </div>
         ) : (
-          <div className="max-w-4xl mx-auto space-y-8">
+          <div className="max-w-6xl mx-auto space-y-8">
             <DetailedCompatibilityResult person1={people[0]} person2={people[1]} />
+            <PlanetaryOverview person1={people[0]} person2={people[1]} />
             
             <div className="text-center space-y-4">
               <Button
