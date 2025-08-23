@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { User, Calendar, Clock, MapPin } from "lucide-react";
 
 interface BirthInfo {
+  name: string;
   date: string;
   time: string;
   city: string;
@@ -35,6 +36,21 @@ const BirthInfoForm = ({ personNumber, birthInfo, onUpdate }: BirthInfoFormProps
       </div>
       
       <div className="grid gap-4">
+        <div className="space-y-2">
+          <Label htmlFor={`name-${personNumber}`} className="flex items-center gap-2 text-sm font-medium">
+            <User className="h-4 w-4 text-accent" />
+            Name
+          </Label>
+          <Input
+            id={`name-${personNumber}`}
+            type="text"
+            value={birthInfo.name}
+            onChange={(e) => handleInputChange('name', e.target.value)}
+            className="bg-secondary/20 border-border/40 focus:border-primary focus:ring-primary/20 h-11"
+            placeholder="Enter name"
+          />
+        </div>
+
         <div className="space-y-2">
           <Label htmlFor={`date-${personNumber}`} className="flex items-center gap-2 text-sm font-medium">
             <Calendar className="h-4 w-4 text-accent" />

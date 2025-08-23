@@ -8,6 +8,7 @@ import { Sparkles, Heart, Star, User, Users, UserPlus, UsersRound, Plus, X } fro
 import cosmicBackground from "@/assets/cosmic-background.jpg";
 
 interface BirthInfo {
+  name: string;
   date: string;
   time: string;
   city: string;
@@ -16,9 +17,9 @@ interface BirthInfo {
 const Index = () => {
   const [activeTab, setActiveTab] = useState("romantic");
   const [people, setPeople] = useState<BirthInfo[]>([
-    { date: "", time: "", city: "" },
-    { date: "", time: "", city: "" },
-    { date: "", time: "", city: "" }
+    { name: "", date: "", time: "", city: "" },
+    { name: "", date: "", time: "", city: "" },
+    { name: "", date: "", time: "", city: "" }
   ]);
   const [showResult, setShowResult] = useState(false);
 
@@ -35,7 +36,7 @@ const Index = () => {
   const isFormValid = () => {
     const requiredCount = getRequiredPeopleCount();
     return people.slice(0, requiredCount).every(person => 
-      person.date && person.time && person.city
+      person.name && person.date && person.time && person.city
     );
   };
 
@@ -47,7 +48,7 @@ const Index = () => {
 
   const addPerson = () => {
     if (people.length < 5) {
-      setPeople([...people, { date: "", time: "", city: "" }]);
+      setPeople([...people, { name: "", date: "", time: "", city: "" }]);
     }
   };
 
@@ -66,9 +67,9 @@ const Index = () => {
 
   const handleReset = () => {
     setPeople([
-      { date: "", time: "", city: "" },
-      { date: "", time: "", city: "" },
-      { date: "", time: "", city: "" }
+      { name: "", date: "", time: "", city: "" },
+      { name: "", date: "", time: "", city: "" },
+      { name: "", date: "", time: "", city: "" }
     ]);
     setShowResult(false);
   };
