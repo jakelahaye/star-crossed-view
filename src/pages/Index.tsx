@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import BirthInfoForm from "@/components/BirthInfoForm";
 import DetailedCompatibilityResult from "@/components/DetailedCompatibilityResult";
-import { Sparkles, Heart, Star, User, Users, UserPlus, UsersRound } from "lucide-react";
+import { Sparkles, Heart, Star, User, Users, UserPlus, UsersRound, Plus, X } from "lucide-react";
 import cosmicBackground from "@/assets/cosmic-background.jpg";
 
 interface BirthInfo {
@@ -15,21 +15,47 @@ interface BirthInfo {
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("romantic");
-  const [person1Info, setPerson1Info] = useState<BirthInfo>({
-    date: "",
-    time: "",
-    city: ""
-  });
-  const [person2Info, setPerson2Info] = useState<BirthInfo>({
-    date: "",
-    time: "",
-    city: ""
-  });
+  const [people, setPeople] = useState<BirthInfo[]>([
+    { date: "", time: "", city: "" },
+    { date: "", time: "", city: "" },
+    { date: "", time: "", city: "" }
+  ]);
   const [showResult, setShowResult] = useState(false);
 
+  const getRequiredPeopleCount = () => {
+    switch (activeTab) {
+      case "solo": return 1;
+      case "romantic":
+      case "friendship": return 2;
+      case "group": return Math.max(3, people.length);
+      default: return 2;
+    }
+  };
+
   const isFormValid = () => {
-    return person1Info.date && person1Info.time && person1Info.city &&
-           person2Info.date && person2Info.time && person2Info.city;
+    const requiredCount = getRequiredPeopleCount();
+    return people.slice(0, requiredCount).every(person => 
+      person.date && person.time && person.city
+    );
+  };
+
+  const updatePersonInfo = (index: number, info: BirthInfo) => {
+    const newPeople = [...people];
+    newPeople[index] = info;
+    setPeople(newPeople);
+  };
+
+  const addPerson = () => {
+    if (people.length < 5) {
+      setPeople([...people, { date: "", time: "", city: "" }]);
+    }
+  };
+
+  const removePerson = (index: number) => {
+    if (people.length > 3 && index >= 3) {
+      const newPeople = people.filter((_, i) => i !== index);
+      setPeople(newPeople);
+    }
   };
 
   const handleCalculateCompatibility = () => {
@@ -39,8 +65,11 @@ const Index = () => {
   };
 
   const handleReset = () => {
-    setPerson1Info({ date: "", time: "", city: "" });
-    setPerson2Info({ date: "", time: "", city: "" });
+    setPeople([
+      { date: "", time: "", city: "" },
+      { date: "", time: "", city: "" },
+      { date: "", time: "", city: "" }
+    ]);
     setShowResult(false);
   };
 
@@ -117,29 +146,87 @@ const Index = () => {
           <div className="max-w-5xl mx-auto space-y-8">
             {/* Birth Information Forms */}
             <div className="relative">
-              {/* Cosmic connector line */}
-              <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0">
-                <div className="w-px h-20 bg-gradient-to-b from-accent/0 via-accent/50 to-accent/0"></div>
-                <Heart className="h-6 w-6 text-accent mx-auto -mt-3 -mb-3 animate-pulse" />
-                <div className="w-px h-20 bg-gradient-to-b from-accent/0 via-accent/50 to-accent/0"></div>
-              </div>
+              {/* Cosmic connector line for 2-person modes */}
+              {(activeTab === "romantic" || activeTab === "friendship") && (
+                <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0">
+                  <div className="w-px h-20 bg-gradient-to-b from-accent/0 via-accent/50 to-accent/0"></div>
+                  <Heart className="h-6 w-6 text-accent mx-auto -mt-3 -mb-3 animate-pulse" />
+                  <div className="w-px h-20 bg-gradient-to-b from-accent/0 via-accent/50 to-accent/0"></div>
+                </div>
+              )}
               
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 relative z-10">
-                <div className="order-1 animate-fade-in-up">
-                  <BirthInfoForm
-                    personNumber={1}
-                    birthInfo={person1Info}
-                    onUpdate={setPerson1Info}
-                  />
+              {/* Dynamic form rendering based on mode */}
+              {activeTab === "solo" && (
+                <div className="flex justify-center">
+                  <div className="w-full max-w-md animate-fade-in-up">
+                    <BirthInfoForm
+                      personNumber={1}
+                      birthInfo={people[0]}
+                      onUpdate={(info) => updatePersonInfo(0, info)}
+                    />
+                  </div>
                 </div>
-                <div className="order-2 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                  <BirthInfoForm
-                    personNumber={2}
-                    birthInfo={person2Info}
-                    onUpdate={setPerson2Info}
-                  />
+              )}
+              
+              {(activeTab === "romantic" || activeTab === "friendship") && (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 relative z-10">
+                  <div className="order-1 animate-fade-in-up">
+                    <BirthInfoForm
+                      personNumber={1}
+                      birthInfo={people[0]}
+                      onUpdate={(info) => updatePersonInfo(0, info)}
+                    />
+                  </div>
+                  <div className="order-2 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                    <BirthInfoForm
+                      personNumber={2}
+                      birthInfo={people[1]}
+                      onUpdate={(info) => updatePersonInfo(1, info)}
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
+              
+              {activeTab === "group" && (
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {people.slice(0, getRequiredPeopleCount()).map((person, index) => (
+                      <div 
+                        key={index} 
+                        className="relative animate-fade-in-up" 
+                        style={{ animationDelay: `${index * 0.1}s` }}
+                      >
+                        {index >= 3 && (
+                          <button
+                            onClick={() => removePerson(index)}
+                            className="absolute -top-2 -right-2 z-10 bg-destructive/20 hover:bg-destructive/30 text-destructive rounded-full p-1 transition-colors"
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                        )}
+                        <BirthInfoForm
+                          personNumber={index + 1}
+                          birthInfo={person}
+                          onUpdate={(info) => updatePersonInfo(index, info)}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  
+                  {people.length < 5 && (
+                    <div className="flex justify-center">
+                      <Button
+                        variant="outline"
+                        onClick={addPerson}
+                        className="border-accent/20 hover:bg-accent/10 hover:border-accent/40"
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        Add Person ({people.length + 1}/5)
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Calculate Button */}
@@ -157,14 +244,14 @@ const Index = () => {
               </Button>
               {!isFormValid() && (
                 <p className="text-muted-foreground mt-4 text-sm animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-                  Please fill in all birth information for both people
+                  Please fill in all birth information for {activeTab === "solo" ? "yourself" : `all ${getRequiredPeopleCount()} people`}
                 </p>
               )}
             </div>
           </div>
         ) : (
           <div className="max-w-4xl mx-auto space-y-8">
-            <DetailedCompatibilityResult person1={person1Info} person2={person2Info} />
+            <DetailedCompatibilityResult person1={people[0]} person2={people[1]} />
             
             <div className="text-center space-y-4">
               <Button

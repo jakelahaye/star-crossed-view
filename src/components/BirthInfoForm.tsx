@@ -10,7 +10,7 @@ interface BirthInfo {
 }
 
 interface BirthInfoFormProps {
-  personNumber: 1 | 2;
+  personNumber: number;
   birthInfo: BirthInfo;
   onUpdate: (info: BirthInfo) => void;
 }
