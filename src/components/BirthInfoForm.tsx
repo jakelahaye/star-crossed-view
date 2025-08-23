@@ -34,26 +34,11 @@ const BirthInfoForm = ({ personNumber, birthInfo, onUpdate }: BirthInfoFormProps
           value={birthInfo.name}
           onChange={(e) => handleInputChange('name', e.target.value)}
           placeholder={`Person ${personNumber}`}
-          className="text-lg font-semibold bg-transparent border-none p-0 h-auto focus:ring-0 focus:border-none bg-starlight bg-clip-text text-transparent placeholder:bg-starlight placeholder:bg-clip-text placeholder:text-transparent"
+          className="text-xl font-semibold bg-transparent border-none p-0 h-auto focus:ring-0 focus:border-none bg-starlight bg-clip-text text-transparent placeholder:bg-starlight placeholder:bg-clip-text placeholder:text-transparent"
         />
       </div>
       
       <div className="grid gap-4">
-        <div className="space-y-2">
-          <Label htmlFor={`name-${personNumber}`} className="flex items-center gap-2 text-sm font-medium">
-            <User className="h-4 w-4 text-accent" />
-            Name
-          </Label>
-          <Input
-            id={`name-${personNumber}`}
-            type="text"
-            value={birthInfo.name}
-            onChange={(e) => handleInputChange('name', e.target.value)}
-            className="bg-secondary/20 border-border/40 focus:border-primary focus:ring-primary/20 h-11"
-            placeholder="Enter name"
-          />
-        </div>
-
         <div className="space-y-2">
           <Label htmlFor={`date-${personNumber}`} className="flex items-center gap-2 text-sm font-medium">
             <Calendar className="h-4 w-4 text-accent" />
