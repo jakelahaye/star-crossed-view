@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { User, Calendar, Clock, MapPin } from "lucide-react";
+import BirthChart from "./BirthChart";
 
 interface BirthInfo {
   name: string;
@@ -37,6 +38,9 @@ const BirthInfoForm = ({ personNumber, birthInfo, onUpdate }: BirthInfoFormProps
           className="text-xl font-semibold bg-transparent border-none p-0 h-auto focus:ring-0 focus:border-none bg-starlight bg-clip-text text-transparent placeholder:bg-starlight placeholder:bg-clip-text placeholder:text-transparent"
         />
       </div>
+
+      {/* Birth Chart */}
+      <BirthChart birthInfo={birthInfo} />
       
       <div className="grid gap-4">
         <div className="space-y-2">
