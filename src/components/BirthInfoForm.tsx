@@ -30,9 +30,12 @@ const BirthInfoForm = ({ personNumber, birthInfo, onUpdate }: BirthInfoFormProps
         <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/20 border border-primary/30">
           <User className="h-5 w-5 text-accent" />
         </div>
-        <h3 className="text-lg font-semibold bg-starlight bg-clip-text text-transparent">
-          Person {personNumber}
-        </h3>
+        <Input
+          value={birthInfo.name}
+          onChange={(e) => handleInputChange('name', e.target.value)}
+          placeholder={`Person ${personNumber}`}
+          className="text-lg font-semibold bg-transparent border-none p-0 h-auto focus:ring-0 focus:border-none bg-starlight bg-clip-text text-transparent placeholder:bg-starlight placeholder:bg-clip-text placeholder:text-transparent"
+        />
       </div>
       
       <div className="grid gap-4">
