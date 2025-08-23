@@ -89,13 +89,13 @@ const Index = () => {
             {/* Birth Information Forms */}
             <div className="relative">
               {/* Cosmic connector line */}
-              <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0 hidden lg:block">
-                <div className="w-px h-12 bg-gradient-to-b from-accent/0 via-accent/50 to-accent/0"></div>
-                <Heart className="h-5 w-5 text-accent mx-auto -mt-2.5 -mb-2.5 animate-pulse" />
-                <div className="w-px h-12 bg-gradient-to-b from-accent/0 via-accent/50 to-accent/0"></div>
+              <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0">
+                <div className="w-px h-20 bg-gradient-to-b from-accent/0 via-accent/50 to-accent/0"></div>
+                <Heart className="h-6 w-6 text-accent mx-auto -mt-3 -mb-3 animate-pulse" />
+                <div className="w-px h-20 bg-gradient-to-b from-accent/0 via-accent/50 to-accent/0"></div>
               </div>
               
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 relative z-10">
                 <div className="order-1 animate-fade-in-up">
                   <BirthInfoForm
                     personNumber={1}
@@ -120,7 +120,7 @@ const Index = () => {
                 size="lg"
                 onClick={handleCalculateCompatibility}
                 disabled={!isFormValid()}
-                className="text-base px-10 py-3 hover:scale-105 transition-all duration-300"
+                className="text-lg px-12 py-4 hover:scale-105 transition-all duration-300"
               >
                 <Sparkles className="h-5 w-5 mr-2" />
                 Calculate Compatibility
