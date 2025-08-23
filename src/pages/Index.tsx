@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import BirthInfoForm from "@/components/BirthInfoForm";
 import DetailedCompatibilityResult from "@/components/DetailedCompatibilityResult";
-import { Sparkles, Heart, Star } from "lucide-react";
+import { Sparkles, Heart, Star, User, Users, UserPlus, UsersRound } from "lucide-react";
 import cosmicBackground from "@/assets/cosmic-background.jpg";
 
 interface BirthInfo {
@@ -13,6 +14,7 @@ interface BirthInfo {
 }
 
 const Index = () => {
+  const [activeTab, setActiveTab] = useState("romantic");
   const [person1Info, setPerson1Info] = useState<BirthInfo>({
     date: "",
     time: "",
@@ -73,6 +75,30 @@ const Index = () => {
             <span className="text-foreground text-sm">Enter birth details below to reveal cosmic compatibility</span>
             <Sparkles className="h-4 w-4 text-accent animate-float" />
           </div>
+        </div>
+
+        {/* Navigation Tabs */}
+        <div className="flex justify-center mb-12">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-auto">
+            <TabsList className="grid w-full grid-cols-4 bg-background/20 backdrop-blur-md border border-accent/20">
+              <TabsTrigger value="solo" className="flex items-center gap-2 data-[state=active]:bg-accent/20 data-[state=active]:text-accent">
+                <User className="h-4 w-4" />
+                Solo
+              </TabsTrigger>
+              <TabsTrigger value="romantic" className="flex items-center gap-2 data-[state=active]:bg-accent/20 data-[state=active]:text-accent">
+                <Heart className="h-4 w-4" />
+                Romantic
+              </TabsTrigger>
+              <TabsTrigger value="friendship" className="flex items-center gap-2 data-[state=active]:bg-accent/20 data-[state=active]:text-accent">
+                <UserPlus className="h-4 w-4" />
+                Friendship
+              </TabsTrigger>
+              <TabsTrigger value="group" className="flex items-center gap-2 data-[state=active]:bg-accent/20 data-[state=active]:text-accent">
+                <UsersRound className="h-4 w-4" />
+                Group
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
         </div>
 
         {/* Decorative elements */}
