@@ -5,6 +5,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import BirthInfoForm from "@/components/BirthInfoForm";
 import DetailedCompatibilityResult from "@/components/DetailedCompatibilityResult";
 import PlanetaryOverview from "@/components/PlanetaryOverview";
+import BirthChart from "@/components/BirthChart";
 import { Sparkles, Heart, Star, User, Users, UserPlus, UsersRound, Plus, X } from "lucide-react";
 import cosmicBackground from "@/assets/cosmic-background.jpg";
 
@@ -274,6 +275,42 @@ const Index = () => {
           <div className="max-w-6xl mx-auto space-y-8">
             {activeTab === "solo" ? (
               <>
+                {/* Birth Chart and Info Section */}
+                <Card className="bg-background/40 backdrop-blur-md border-accent/20">
+                  <CardHeader>
+                    <CardTitle className="text-center text-accent flex items-center justify-center gap-2">
+                      <User className="h-5 w-5" />
+                      {people[0].name}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex flex-col lg:flex-row items-center gap-8">
+                      {/* Birth Chart */}
+                      <div className="flex-shrink-0">
+                        <BirthChart birthInfo={people[0]} />
+                      </div>
+                      
+                      {/* Birth Information */}
+                      <div className="flex-1 space-y-4">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          <div className="text-center p-4 rounded-lg bg-background/20 border border-border/20">
+                            <div className="text-accent mb-2">📅 Birth Date</div>
+                            <div className="font-semibold">{new Date(people[0].date).toLocaleDateString()}</div>
+                          </div>
+                          <div className="text-center p-4 rounded-lg bg-background/20 border border-border/20">
+                            <div className="text-accent mb-2">🕐 Birth Time</div>
+                            <div className="font-semibold">{people[0].time}</div>
+                          </div>
+                          <div className="text-center p-4 rounded-lg bg-background/20 border border-border/20">
+                            <div className="text-accent mb-2">📍 Birth City</div>
+                            <div className="font-semibold">{people[0].city}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+                
                 <PlanetaryOverview person1={people[0]} />
                 
                 {/* Placeholder for AI Analysis */}
